@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualMachineAdminPassword": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/6234f2da-d443-4018-b4d9-25325374079c/resourceGroups/RG-MVP-PROJECTS/providers/Microsoft.KeyVault/vaults/gc-sandbox"
+        },
+        "secretName": "MachineAdminPassword"
+      }
+    },
+    "virtualMachineCount": {
+      "value": 8
+    },
+    "dnsPrefixForPublicIP": {
+      "value": "gcsandbox"
+    }
+  }
+}

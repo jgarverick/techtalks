@@ -1,0 +1,35 @@
+resources:
+- repo: self
+queue:
+  name: Hosted VS2017
+steps:
+- task: AzureResourceGroupDeployment@2
+  displayName: "Validate Availability Set"
+  inputs:
+    azureSubscription: 'Microsoft Azure Sponsorship'
+    resourceGroupName: 'TEST-RG'
+    location: 'East US'
+    csmFile: 'AvailabilitySet/azuredeploy.json'
+    csmParametersFile: 'AvailabilitySet/azuredeploy.parameters.json'
+    deploymentMode: Validation
+
+- task: AzureResourceGroupDeployment@2
+  displayName: "Validate EventGrid"
+  inputs:
+    azureSubscription: 'Microsoft Azure Sponsorship'
+    resourceGroupName: 'TEST-RG'
+    location: 'East US 2'
+    csmFile: 'EventGrid/azuredeploy.json'
+    csmParametersFile: 'EventGrid/azuredeploy.parameters.json'
+    deploymentMode: Validation
+
+- task: AzureResourceGroupDeployment@2
+  displayName: "Validate Service Fabric Cluster"
+  inputs:
+    azureSubscription: 'Microsoft Azure Sponsorship'
+    resourceGroupName: 'TEST-RG'
+    location: 'East US 2'
+    csmFile: 'ServiceFabric/ServiceFabricCluster.json'
+    csmParametersFile: 'ServiceFabric/ServiceFabricCluster.parameters.json'
+    deploymentMode: Validation
+

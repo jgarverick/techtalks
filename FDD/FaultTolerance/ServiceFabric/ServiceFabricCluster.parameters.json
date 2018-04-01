@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "adminUserName": {
+      "value": "clusterAdmin"
+    },
+    "certificateThumbprint": {
+      "value": "BC57DA0B3A3F125A29F32CBB0C08D2616B37E60C"
+    },
+    "sourceVaultResourceId": {
+      "value": "/subscriptions/6234f2da-d443-4018-b4d9-25325374079c/resourceGroups/RG-MVP-PROJECTS/providers/Microsoft.KeyVault/vaults/gc-sandbox"
+    },
+    "certificateUrlValue": {
+      "value": "https://gc-sandbox.vault.azure.net/secrets/fabricCertificate/aa865857c29f4b0db45d0d043674ab0d"
+    },
+    "adminPassword": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/6234f2da-d443-4018-b4d9-25325374079c/resourceGroups/RG-MVP-PROJECTS/providers/Microsoft.KeyVault/vaults/gc-sandbox"
+        },
+        "secretName": "MachineAdminPassword"
+      }
+    }
+  }
+}
