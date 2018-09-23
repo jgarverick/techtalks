@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyAwesomeAPI", "MyAwesomeAPI.csproj", "{A8828F4A-EEFD-47B0-A425-443E8CD05EBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyAwesomeAppLogic", "MyAwesomeAppLogic\MyAwesomeAppLogic.csproj", "{B5AA3BB1-775A-4CA5-AE1D-E0739B173A15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8828F4A-EEFD-47B0-A425-443E8CD05EBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8828F4A-EEFD-47B0-A425-443E8CD05EBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8828F4A-EEFD-47B0-A425-443E8CD05EBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8828F4A-EEFD-47B0-A425-443E8CD05EBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5AA3BB1-775A-4CA5-AE1D-E0739B173A15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5AA3BB1-775A-4CA5-AE1D-E0739B173A15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5AA3BB1-775A-4CA5-AE1D-E0739B173A15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5AA3BB1-775A-4CA5-AE1D-E0739B173A15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
