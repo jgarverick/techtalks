@@ -1,0 +1,302 @@
+{
+  "$connections": {
+    "value": {
+      "service-now": {
+        "connectionId": "/subscriptions/#SubscriptionId/resourceGroups/RG-AZ-AUTOMATION-OPS/providers/Microsoft.Web/connections/service-now",
+        "connectionName": "service-now",
+        "id": "/subscriptions/#SubscriptionId/providers/Microsoft.Web/locations/eastus/managedApis/service-now"
+      }
+    }
+  },
+  "definition": {
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "actions": {
+      "Create_Record": {
+        "inputs": {
+          "body": {
+            "comments": "@body('Parse_JSON')?['authorization']?['action']",
+            "description": "Security Alert: @{body('Parse_JSON')?['caller']}",
+            "impact": "2",
+            "opened_by": "Azure Portal",
+            "severity": "2",
+            "urgency": "2"
+          },
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['service-now']['connectionId']"
+            }
+          },
+          "method": "post",
+          "path": "/api/now/v2/table/@{encodeURIComponent('incident')}",
+          "queries": {
+            "sysparm_display_value": false,
+            "sysparm_exclude_reference_link": true
+          }
+        },
+        "runAfter": {
+          "Parse_JSON": [
+            "Succeeded"
+          ]
+        },
+        "type": "ApiConnection"
+      },
+      "Parse_JSON": {
+        "inputs": {
+          "content": "@triggerBody()",
+          "schema": {
+            "properties": {
+              "authorization": {
+                "properties": {
+                  "action": {
+                    "type": "string"
+                  },
+                  "scope": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "caller": {
+                "type": "string"
+              },
+              "category": {
+                "properties": {
+                  "localizedValue": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "channels": {
+                "type": "string"
+              },
+              "claims": {
+                "properties": {
+                  "aio": {
+                    "type": "string"
+                  },
+                  "altsecid": {
+                    "type": "string"
+                  },
+                  "appid": {
+                    "type": "string"
+                  },
+                  "appidacr": {
+                    "type": "string"
+                  },
+                  "aud": {
+                    "type": "string"
+                  },
+                  "e_exp": {
+                    "type": "string"
+                  },
+                  "exp": {
+                    "type": "string"
+                  },
+                  "groups": {
+                    "type": "string"
+                  },
+                  "http://schemas.microsoft.com/claims/authnclassreference": {
+                    "type": "string"
+                  },
+                  "http://schemas.microsoft.com/claims/authnmethodsreferences": {
+                    "type": "string"
+                  },
+                  "http://schemas.microsoft.com/identity/claims/identityprovider": {
+                    "type": "string"
+                  },
+                  "http://schemas.microsoft.com/identity/claims/objectidentifier": {
+                    "type": "string"
+                  },
+                  "http://schemas.microsoft.com/identity/claims/scope": {
+                    "type": "string"
+                  },
+                  "http://schemas.microsoft.com/identity/claims/tenantid": {
+                    "type": "string"
+                  },
+                  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress": {
+                    "type": "string"
+                  },
+                  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname": {
+                    "type": "string"
+                  },
+                  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": {
+                    "type": "string"
+                  },
+                  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier": {
+                    "type": "string"
+                  },
+                  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname": {
+                    "type": "string"
+                  },
+                  "iat": {
+                    "type": "string"
+                  },
+                  "ipaddr": {
+                    "type": "string"
+                  },
+                  "iss": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "nbf": {
+                    "type": "string"
+                  },
+                  "puid": {
+                    "type": "string"
+                  },
+                  "uti": {
+                    "type": "string"
+                  },
+                  "ver": {
+                    "type": "string"
+                  },
+                  "wids": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "correlationId": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "eventDataId": {
+                "type": "string"
+              },
+              "eventName": {
+                "properties": {
+                  "localizedValue": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "eventTimestamp": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "level": {
+                "type": "string"
+              },
+              "operationId": {
+                "type": "string"
+              },
+              "operationName": {
+                "properties": {
+                  "localizedValue": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "properties": {
+                "properties": {
+                  "serviceRequestId": {},
+                  "statusCode": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "relatedEvents": {
+                "type": "array"
+              },
+              "resourceGroupName": {
+                "type": "string"
+              },
+              "resourceId": {
+                "type": "string"
+              },
+              "resourceProviderName": {
+                "properties": {
+                  "localizedValue": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "resourceType": {
+                "properties": {
+                  "localizedValue": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "status": {
+                "properties": {
+                  "localizedValue": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "subStatus": {
+                "properties": {
+                  "localizedValue": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "submissionTimestamp": {
+                "type": "string"
+              },
+              "subscriptionId": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "runAfter": {},
+        "type": "ParseJson"
+      }
+    },
+    "contentVersion": "1.0.0.0",
+    "outputs": {},
+    "parameters": {
+      "$connections": {
+        "defaultValue": {},
+        "type": "Object"
+      }
+    },
+    "triggers": {
+      "manual": {
+        "inputs": {
+          "schema": {}
+        },
+        "kind": "Http",
+        "type": "Request"
+      }
+    }
+  }
+}

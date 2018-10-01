@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.Net.Http;
 using Polly;
@@ -45,6 +46,8 @@ namespace MyAwesomeAppLogic
             } catch (Exception e)
             {
                 // Don't just catch and ignore; log or do something
+                Microsoft.ApplicationInsights.TelemetryClient telemetryClient = new Microsoft.ApplicationInsights.TelemetryClient();
+                telemetryClient.TrackException(e);
                 output += "Call eventually failed after " + retries.ToString() + " retries.";
             }
             return output;
@@ -68,5 +71,6 @@ namespace MyAwesomeAppLogic
                 return new string[] { "value1", "value2" };
             });
         }
+
     }
 }
