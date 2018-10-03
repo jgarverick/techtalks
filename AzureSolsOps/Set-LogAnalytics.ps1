@@ -4,7 +4,7 @@ param (
     $ResourceGroup
 )
 
-Import-AzureRmContext -Path $env:HOME/azdemo.json
+Import-AzureRmContext -Path $env:USERPROFILE\azdemo.json
 
 New-AzureRmOperationalInsightsWorkspace -ResourceGroupName $ResourceGroup -Name OPS-ANALYTICS `
--Location EastUS
+-Location EastUS -Sku standalone

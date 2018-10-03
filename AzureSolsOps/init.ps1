@@ -1,8 +1,19 @@
 param (
     [string]
     [parameter(Mandatory=$true)]
-    $SubscriptionName
+    $SubscriptionName,
+	[string]
+    [parameter(Mandatory=$true)]
+    $ResourceGroup
 )
+
+if(!(Test-Path $env:USERPROFILE\azdemo.json)) {
+	Connect-AzureRmAccount
+	Select-AzureRmSubscription -SubscriptionName $SubscriptionName
+	Save-AzureRmContext -Path $env:USERPROFILE\azdemo.json
+}
+
+Select-AzureRmSubscription -SubscriptionName $SubscriptionName
 
 az login
 # set the account you want to use
@@ -12,16 +23,16 @@ az account set -s $SubscriptionName
 az extension add --name eventgrid
 az extension add --name log-analytics
 
-az group create --name RG-AZ-AUTOMATION-OPS --location EastUS
+az group create --name $ResourceGroup --location EastUS
 
 # set up the Automation Account
-./Set-Automation.ps1 -ResourceGroup RG-AZ-AUTOMATION-OPS
+./Set-Automation.ps1 -ResourceGroup $ResourceGroup
 # set up Log Analytics
-./Set-LogAnalytics.ps1 -ResourceGroup RG-AZ-AUTOMATION-OPS
+./Set-LogAnalytics.ps1 -ResourceGroup $ResourceGroup
 
 # To export the resource group as an ARM template, uncomment the following
-# az group export -g RG-AZ-AUTOMATION-OPS -o JSON > template.json
+# az group export -g $ResourceGroup -o JSON > template.json
 
 $SubscriptionId = (az account show --query "id")
 
-./demo1/init.ps1 -SubscriptionId $SubscriptionId -ResourceGroup "RG-AZ-AUTOMATION-OPS"
+./demo1/init.ps1 -SubscriptionId $SubscriptionId -ResourceGroup $ResourceGroup
