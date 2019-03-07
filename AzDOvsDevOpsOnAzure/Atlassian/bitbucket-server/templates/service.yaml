@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "bitbucket-server.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "bitbucket-server.name" . }}
+    helm.sh/chart: {{ include "bitbucket-server.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+      port: 80
+  selector:
+    app.kubernetes.io/name: {{ include "bitbucket-server.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

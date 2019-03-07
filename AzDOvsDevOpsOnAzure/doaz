@@ -1,0 +1,40 @@
+#!/bin/bash
+
+source ./istioconf.sh
+source ./infra.sh
+# Entry point for the script
+
+# This will check to see if Istio has been downloaded and if not, download it
+# Default version will be set to 1.0.5
+ISTIO_VERSION=1.0.5
+EVAL_ISTIODIR=$(stat ./istio-$ISTIO_VERSION | grep 'No such')
+
+if [ "$EVAL_ISTIODIR" == "" ]; then
+    echo "No copy of istio has been found.  Downloading...."
+    if [ "$(uname)" == "Darwin" ]; then
+        # MacOS
+        curl -sL "https://github.com/istio/istio/releases/download/$ISTIO_VERSION/istio-$ISTIO_VERSION-osx.tar.gz" | tar xz
+    else
+        curl -sL "https://github.com/istio/istio/releases/download/$ISTIO_VERSION/istio-$ISTIO_VERSION-linux.tar.gz" | tar xz
+    fi
+else
+    echo "A downloaded copy of istio has been found.  Moving on."
+fi
+
+cd istio-$ISTIO_VERSION
+chmod +x ./bin/istioctl
+sudo mv ./bin/istioctl /usr/local/bin/istioctl
+
+EVAL_ISTIORC=$(cat ~/.bashrc | grep istioctl.bash)
+if [ "$EVAL_ISTIORC" == "" ]; then
+echo "Adding istioctl autocompletions to bashrc..."
+# Generate the bash completion file and source it in your current shell
+istioctl collateral --bash -o ~/completions
+source ~/completions/istioctl.bash
+
+# Source the bash completion file in your .bashrc so that the command-line completions
+# are permanently available in your shell
+echo "source ~/completions/istioctl.bash" >> ~/.bashrc
+fi
+
+infraup 
