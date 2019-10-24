@@ -1,0 +1,12 @@
+{{- $root := . }}
+{{- range $name, $values := .Values.config }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "teamcity-agent.fullname" $root }}-{{ $name | lower }}
+data:
+  {{- range $key, $value := $values }}
+  {{ $key }}: {{ $value }}
+  {{- end }}
+---
+{{- end }}

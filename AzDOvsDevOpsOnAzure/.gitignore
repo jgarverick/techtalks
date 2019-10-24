@@ -1,0 +1,8 @@
+.DS_Store
+**/bin
+**/obj
+*.tgz
+*.zip
+*.gz
+istio-*/
+._*
